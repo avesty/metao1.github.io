@@ -797,7 +797,19 @@ body {
   .resp-sharing-button {
     margin-right: -45px; } }
 
+@media (max-width: 479px) and (min-width: 320px) {
+  .goto-top {
+    margin-right: -45px; } }
+
 @media (max-width: 767px) and (min-width: 480px) {
+  .goto-top {
+    margin-right: -45px; } }
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .goto-top {
+    margin-right: -45px; } }
+
+@media (max-width: 1360px) and (min-width: 1024px) {
   .goto-top {
     margin-right: -45px; } }
 
@@ -942,10 +954,10 @@ body {
 
 @media (max-width: 479px) and (min-width: 320px) {
   .imageContent img {
-    height: 32px;
-    width: 32px;
+    height: 64px;
+    width: 64px;
     margin: 10px;
-    margin-left: 250px; } }
+    margin-left: 200px; } }
 
 @media (max-width: 1023px) and (min-width: 768px) {
   .imageContent img {
@@ -970,10 +982,10 @@ body {
 
 @media (max-width: 479px) and (min-width: 320px) {
   .imageContent svg {
-    height: 32px;
-    width: 32px;
+    height: 64px;
+    width: 64px;
     margin: 10px;
-    margin-left: 250px; } }
+    margin-left: 200px; } }
 
 @media (max-width: 1023px) and (min-width: 768px) {
   .imageContent svg {
