@@ -570,7 +570,6 @@ var JobsContent = _react2['default'].createClass({
         crossDomain: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         success: (function (data) {
-          console.log(data['responseData'].results[0].url);
           response.imageUrl = data['responseData'].results[0].url;
         }).bind(this)
       });
@@ -830,7 +829,6 @@ var ChildrenList = _react2['default'].createClass({
         crossDomain: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         success: (function (data) {
-          console.log(data['responseData'].results[0].url);
           response.imageUrl = data['responseData'].results[0].url;
         }).bind(this)
       });
@@ -1099,7 +1097,6 @@ var ShowContent = _react2['default'].createClass({
         crossDomain: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         success: (function (data) {
-          console.log(data['responseData'].results[0].url);
           response.imageUrl = data['responseData'].results[0].url;
         }).bind(this)
       });
@@ -1151,6 +1148,9 @@ var ShowContent = _react2['default'].createClass({
       }
     }).bind(this));
   },
+  onErrorImageLoading: function onErrorImageLoading() {
+    return _react2['default'].createElement('img', { src: '../../images/preview_not_available.jpg', alt: 'preview not available' });
+  },
 
   changeMenu: function changeMenu() {
     $('.menu li').removeClass('selected');
@@ -1198,7 +1198,7 @@ var ShowContent = _react2['default'].createClass({
           _react2['default'].createElement(
             'div',
             { className: 'imageContent' },
-            _react2['default'].createElement(_reactImageloader2['default'], { src: response.imageUrl, preloader: _this.preloader })
+            _react2['default'].createElement(_reactImageloader2['default'], { src: response.imageUrl, preloader: _this.preloader, onError: _this.onErrorImageLoading })
           ),
           _react2['default'].createElement(
             'div',
