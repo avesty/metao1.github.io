@@ -1363,7 +1363,7 @@ var Page = _react2['default'].createClass({
     },
 
     componentDidMount: function componentDidMount() {
-        this.href = "http://metao.ir/page/" + this.props.params.origin + "/" + this.props.params.url;
+        this.href = "http://metao.ir/#/page/" + this.props.params.origin + "/" + this.props.params.url;
         this.facebook = "http://www.facebook.com/sharer/sharer.php?u=" + this.urlEncoded(this.href);
         this.twitter = "http://twitter.com/share?url=" + this.urlEncoded(this.href);
         this.linkedin = "http://www.linkedin.com/shareArticle?mini=true&url=" + this.urlEncoded(this.href);
