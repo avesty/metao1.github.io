@@ -114,6 +114,18 @@ table {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.27);
     background-position: 6px 5px; } }
 
+.publicShare {
+  position: fixed;
+  right: 10px;
+  text-decoration: underline;
+  bottom: 140px;
+  display: block;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.27);
+  background-position: 6px 5px; }
+
 .top {
   width: 100%;
   margin: 0;
