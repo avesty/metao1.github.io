@@ -432,22 +432,8 @@ var AboutContent = React.createClass({
           { className: "about-content" },
           React.createElement(
             "a",
-            { href: "https://linkedin.com/in/allahkarami" },
+            { href: "https://www.linkedin.com/in/allahkarami" },
             "Mehrdad Allahkarami"
-          )
-        ),
-        React.createElement(
-          "h1",
-          { className: "heading" },
-          "Coordinator"
-        ),
-        React.createElement(
-          "p",
-          { className: "about-content" },
-          React.createElement(
-            "a",
-            { href: "https://linkedin.com/in/broufeh" },
-            "Ziba Broufeh"
           )
         ),
         React.createElement(
@@ -813,22 +799,23 @@ var ChildrenList = _react2['default'].createClass({
         if (this.isMounted()) {
           this.hideLoader();
         }
+        $.ajax({
+          url: 'https://ajax.googleapis.com/ajax/services/search/images?q=' + this.urlEncoded(response.title) + '&v=1.0',
+          dataType: 'jsonp',
+          cache: false,
+          crossDomain: true,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+          success: (function (data) {
+            response.imageUrl = data['responseData'].results[0].url;
+          }).bind(this)
+        });
         return;
       }
 
       var domain = response.url ? response.url.split(':')[1].split('//')[1].split('/')[0] : '';
 
       response.domain = domain;
-      $.ajax({
-        url: 'https://ajax.googleapis.com/ajax/services/search/images?q=' + this.urlEncoded(response.title) + '&v=1.0',
-        dataType: 'jsonp',
-        cache: false,
-        crossDomain: true,
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        success: (function (data) {
-          response.imageUrl = data['responseData'].results[0].url;
-        }).bind(this)
-      });
+
       this.setState({ newStories: this.state.newStories.concat(response) });
     }).bind(this));
   },
@@ -1325,6 +1312,7 @@ var twitter = undefined;
 var googleplus = undefined;
 var linkedin = undefined;
 var email = undefined;
+var timer = undefined;
 
 var Page = _react2['default'].createClass({
     displayName: 'Page',
@@ -1334,6 +1322,7 @@ var Page = _react2['default'].createClass({
             isFrameLoading: true,
             isFrameError: false,
             newStories: [],
+            isTimeout: false,
             isLoading: true,
             isLoadingMore: false
         };
@@ -1352,6 +1341,8 @@ var Page = _react2['default'].createClass({
     },
 
     iframeLoaded: function iframeLoaded() {
+        console.log('on frame loading');
+        window.clearInterval(this.timer);
         this.setState({
             isFrameLoading: false
         });
@@ -1371,13 +1362,16 @@ var Page = _react2['default'].createClass({
         this.email = "mailto: ?";
         this.origin = this.props.params.origin;
         this.getContentData(this.props.params.url);
-        this.refs.iframe.getDOMNode().addEventListener('load', this.props.onLoad);
+        this.refs.frame.getDOMNode().addEventListener('load', this.props.onLoad);
     },
 
     getContentData: function getContentData(id) {
 
         var contentUrl = 'https://hacker-news.firebaseio.com/v0/item/' + id + '.json';
-
+        this.timer = setTimeout((function () {
+            console.log('page time out!');
+            this.setState({ isTimeout: true });
+        }).bind(this), 20000);
         $.get(contentUrl, (function (response) {
 
             if (response.length == 0) {
@@ -1534,23 +1528,38 @@ var Page = _react2['default'].createClass({
                 ),
                 _react2['default'].createElement(
                     'div',
-                    { className: 'content' },
+                    { className: _this.state.isTimeout ? 'content' : 'hide' },
+                    _react2['default'].createElement(
+                        'span',
+                        { className: 'padding-right' },
+                        'Page didn\'t load?'
+                    ),
+                    ' ',
+                    _react2['default'].createElement(
+                        'a',
+                        { href: response.url, target: '_blank' },
+                        ' Click here'
+                    )
+                ),
+                _react2['default'].createElement(
+                    'div',
+                    { className: _this.state.isTimeout ? 'hide' : 'content' },
                     _react2['default'].createElement(
                         'div',
                         { className: 'iframewrapper' },
                         _react2['default'].createElement(
                             'div',
-                            { className: _this.state.isFrameLoading ? '' : 'hide' },
-                            _react2['default'].createElement(_spinnerJsx2['default'], null),
-                            _react2['default'].createElement(
-                                'span',
-                                null,
-                                'Please wait... I get the news for you here'
-                            )
+                            { className: _this.state.isFrameLoading ? 'show' : 'hide' },
+                            _react2['default'].createElement(_spinnerJsx2['default'], null)
+                        ),
+                        _react2['default'].createElement(
+                            'span',
+                            { className: _this.state.isFrameLoading ? 'show' : 'hide' },
+                            'Please wait... I get the news for you here'
                         ),
                         _react2['default'].createElement(
                             'iframe',
-                            { ref: 'iframe', src: response.url, className: _this.state.isFrameLoading ? 'hide' : 'iframewrapper',
+                            { ref: 'frame', src: response.url, className: _this.state.isFrameLoading ? 'hide' : 'iframewrapper',
                                 frameBorder: '0', onLoad: _this.iframeLoaded },
                             'Seems there is a problem fetching the page.Maybe the page is unavailable in your country or does not exist any longer'
                         ),
@@ -1577,12 +1586,7 @@ var Page = _react2['default'].createClass({
                 _react2['default'].createElement(_spinnerJsx2['default'], null)
             ),
             newStories,
-            this.props.children,
-            _react2['default'].createElement(
-                'div',
-                { className: this.state.isLoadingMore ? 'mtop50' : 'hide' },
-                _react2['default'].createElement(_spinnerJsx2['default'], null)
-            )
+            this.props.children
         );
     }
 });

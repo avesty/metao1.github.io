@@ -104,6 +104,7 @@ table {
 @media (max-width: 1023px) and (min-width: 768px) {
   .publicShare {
     position: fixed;
+    background: none;
     right: 10px;
     text-decoration: underline;
     bottom: 140px;
@@ -280,6 +281,16 @@ table {
   background-color: #3b5998;
   border-color: #3b5998; }
 
+.resp-side-sharing-button--facebook {
+  background-color: #3b5998;
+  border-color: #3b5998; }
+
+.resp-side-sharing-button--facebook:hover,
+.resp-side-sharing-button--facebook:active {
+  transform: translateX(-3px);
+  background-color: #2d4373;
+  border-color: #2d4373; }
+
 .resp-sharing-button--facebook:hover,
 .resp-sharing-button--facebook:active {
   transform: translateY(-3px);
@@ -416,6 +427,22 @@ TODO ::
   width: 100px;
   height: 400px; }
 
+.share .facebook {
+  display: block;
+  z-index: 99;
+  position: fixed !important;
+  position: absolute;
+  bottom: 50%;
+  height: 144px;
+  width: 44px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0 !important;
+  background: none;
+  right: 0;
+  margin-bottom: -68px;
+  direction: ltr; }
+
 * {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -506,6 +533,12 @@ body {
       background-position-y: -10px;
       background-position-x: 550px;
       will-change: transform; } }
+
+.show {
+  display: block; }
+
+.padding-right {
+  padding: 10px; }
 
 .mtop50 {
   margin-top: -50px; }
